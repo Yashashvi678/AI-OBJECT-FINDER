@@ -1,0 +1,68 @@
+body
+{
+    background-size: cover;
+}
+
+
+.heading
+{
+    width: 100%;
+    font-size: 25px;
+    font-weight: bold;
+    margin: 0;
+}
+
+#start, #number_if_objects, #status
+{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#object
+{
+    color: rgb(0, 4, 255);
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: rgb(255, 208, 0);
+    width: fit-content;
+    padding: 10px;
+    border-radius: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.footer
+{
+    bottom: 0;
+    background-color: rgb(126, 126, 126);
+    color: white;
+    position: fixed;
+    width: 100%;
+    text-align: center;
+}
+
+#note
+{
+    font-size: 20px;
+    color: black;
+    font-weight: bold;
+    font-family: cursive;
+}
+
+canvas
+{
+    border: 2px black;
+    margin-top: 140px;
+    box-shadow: 8px 8px 8px rgb(123, 255, 0);
+    border-radius: 20px;
+}
+
+
+#input
+{
+    width: 35%;
+    border-bottom:5px;
+    padding: 5px;
+    font-size: 15px;
+    font-weight: bold;
+}
