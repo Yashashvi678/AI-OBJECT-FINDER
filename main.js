@@ -11,7 +11,7 @@ function setup()
 
     video = createCapture(VIDEO);
     video.hide();
-    synth = window.speechSynthesis();
+    video.size(360, 360)
 }
 
 function start()    
@@ -48,7 +48,7 @@ function draw()
     if(status != "")
     {
         objectDetector.detect(video, gotResult);
-        for(i = 0; i = object.lenght; i++)
+        for(i = 0; i = object.length; i++)
         {
             percent = floor(object[i].confidence * 100);
             object_label = object[i].label;
@@ -64,6 +64,7 @@ function draw()
             objectDetector.detect(gotResult);
             document.getElementById("status").innerHTML = object_name + "Found";
 
+            synth = window.speechSynthesis;
             utterThis = new SpeechSynthesisUtterance('Object Mentioned Found');
             synth.speak(utterThis);
         }
