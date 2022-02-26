@@ -1,8 +1,7 @@
 status = "";
-object = [];
 video = "";
+objects = [];
 object_name = "";
-object_label = "";
 
 function setup()
 {
@@ -11,67 +10,66 @@ function setup()
 
     video = createCapture(VIDEO);
     video.hide();
-    video.size(360, 360)
-}
+}   
 
-function start()    
+function start()
 {
-    objectDetector = ml5.objectDetector('cocossd', modelLoaded);
+    ObjectDetector = ml5.objectDetector('cocossd', modelLoaded);
     document.getElementById("status").innerHTML = "Status: Detecting Objects";
-    object_name = document.getElementById("object_name").value;
+    object_name = document.getElementById("input").value;
 }
 
 function modelLoaded()
 {
     console.log("Model Loaded");
-    status = true;
+    status = true;  
 }
 
+function draw()
+{
+    image(video, 0, 0, 400, 400);
 
+    if(status != "")
+    {
+        ObjectDetector.detect(video, gotResult);
+        for(i = 0 ; i = objects[i].length ; i++)
+        {
+            document.getElementById("status").innerHTML = "Status = Objects Detected";
+            document.getElementById("number_if_objects").innerHTML = "Number Of Objects Detected Are : " + objects[i].length;
+
+            fill("green");
+            percent = floor(objects[i].confidence * 100);
+            noFill();
+            stroke("green");
+            text(objects[i].label + " " + percent + "%", objects[i].x, objects[i].y);
+            rect(objects[i].x, objects[i].y , objects[i].width, objects[i].height);
+            
+            if(objects[i].label == object_name)
+           {
+             video.stop();
+             objectDetector.detect(gotResult);
+             document.getElementById("number_of_objects").innerHTML = object_name + " Found";
+             synth = window.speechSynthesis;
+             utterThis = new SpeechSynthesisUtterance(object_name + "Found");
+             synth.speak(utterThis);
+           }
+           else
+           {
+             document.getElementById("number_of_objects").innerHTML = object_name + " Not Found";
+           }     
+       }
+            
+        }
+
+    }
 
 function gotResult(error, results)
 {
     if(error)
     {
-        console.log(error);
+        console.error();
     }else{
         console.log(results);
-        object = results;
-    }
-}
-
-
-function draw()
-{
-    image(video, 0, 0, 360, 360);
-
-    if(status != "")
-    {
-        objectDetector.detect(video, gotResult);
-        for(i = 0; i = object.length; i++)
-        {
-            percent = floor(object[i].confidence * 100);
-            object_label = object[i].label;
-            text(object_label + " " + percent + "%", object[i].x, object[i].y);
-            fill("red");
-            noFill();
-            stroke("red");
-            rect(object[i].x, object[i].y , object[i].width, object[i].height);
-            
-        if(object[i].label == object_name)
-        {
-            video.stop();
-            objectDetector.detect(gotResult);
-            document.getElementById("status").innerHTML = object_name + "Found";
-
-            synth = window.speechSynthesis;
-            utterThis = new SpeechSynthesisUtterance('Object Mentioned Found');
-            synth.speak(utterThis);
-        }
-
-    else{
-        document.getElementById("status").innerHTML = "Object Mentioned Not Found";
-    }
-}
+        objects = results;
     }
 }
